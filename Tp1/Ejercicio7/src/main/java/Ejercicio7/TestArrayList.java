@@ -133,6 +133,14 @@ public class TestArrayList {
                 j++;
             }
         }
+        while (i < lista1.size()) {
+            resultado.add(lista1.get(i));
+            i++;
+        }
+        while (j < lista2.size()) {
+            resultado.add(lista2.get(j));
+            j++;
+        }
         return resultado;
     }
     
