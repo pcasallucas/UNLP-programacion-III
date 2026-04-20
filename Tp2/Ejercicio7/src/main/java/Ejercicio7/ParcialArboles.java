@@ -6,10 +6,25 @@ public class ParcialArboles {
         if (arbol.isEmpty()){
             return false;
         }
-        if (arbol.getData() == num){
-            return cantHijos(arbol.getLeftChild()) > cantHijos(arbol.getRightChild());
+        BinaryTree<Integer> node = findNode(arbol, num);
+        if (node == null){
+            return false;
         }
-        return false;
+        return cantHijos(node.getLeftChild()) > cantHijos(node.getRightChild());
+    }
+    
+    private BinaryTree<Integer> findNode(BinaryTree<Integer> tree, int num){
+        if (tree == null || tree.isEmpty()){
+            return null;
+        }
+        if (tree.getData() == num){
+            return tree;
+        }
+        BinaryTree<Integer> leftResult = findNode(tree.getLeftChild(), num);
+        if (leftResult != null){
+            return leftResult;
+        }
+        return findNode(tree.getRightChild(), num);
     }
 
     private int cantHijos(BinaryTree<Integer> tree){
@@ -19,6 +34,9 @@ public class ParcialArboles {
         if (tree.isLeaf()){
             return 0;
         } 
-        
+        if ((tree.hasLeftChild() && !tree.hasRightChild()) || (!tree.hasLeftChild() && tree.hasRightChild())){
+            return 1 + cantHijos(tree.getLeftChild());
+        }
+        return -1 + cantHijos(tree.getLeftChild()) + cantHijos(tree.getRightChild());
     }
 }
